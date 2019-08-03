@@ -17,9 +17,9 @@ def identity(payload):
 
 
 def auth_response_handler(access_token, identity):
+    # session["identity"] = identity
     return jsonify({
-        'access_token': access_token.decode('utf-8'),
-        'admin': identity.admin
+        'access_token': access_token.decode('utf-8')
     })
 
 

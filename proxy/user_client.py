@@ -12,7 +12,7 @@ class User:
 
 def get_user_by_id(id):
     print("ayy", type(id), id)
-    response = requests.get("http://127.0.0.1:5001/api/users/id/%(id)d" % {
+    response = requests.get("http://127.0.0.1:5001/api/app/users/%(id)d" % {
         "id": id
     })
     if response.status_code == 200:
@@ -21,7 +21,7 @@ def get_user_by_id(id):
 
 
 def get_user_by_username(username):
-    response = requests.get("http://127.0.0.1:5001/api/users/username/%(username)s" % {
+    response = requests.get("http://127.0.0.1:5001/api/app/users/username/%(username)s" % {
         "username": username
     })
     if response.status_code == 200:
