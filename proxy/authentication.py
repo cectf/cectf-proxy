@@ -1,5 +1,5 @@
 
-from flask import jsonify
+from flask import jsonify, session
 from werkzeug.security import safe_str_cmp
 from flask_jwt import JWT
 from proxy import user_client

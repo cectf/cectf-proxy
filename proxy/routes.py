@@ -1,6 +1,6 @@
 
 import requests
-from flask import Blueprint, current_app, request, Response
+from flask import Blueprint, current_app, request, Response, session
 from flask_jwt import jwt_required, current_identity
 
 
@@ -38,6 +38,8 @@ static_bp = Blueprint("static_routes", __name__, url_prefix="/")
 @static_bp.route('/admin/')
 @static_bp.route('/admin/<path:path>')
 def frontend(path=None):
+    print("current session: ", session)
+    session["abcd"] = 1234
     return _proxy(current_app.config.get('TOPKEK_FRONTEND_URL'))
 
 
