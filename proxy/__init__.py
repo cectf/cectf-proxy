@@ -24,8 +24,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import authentication
-    authentication.init_app(app)
     from . import routes
     routes.init_app(app)
 

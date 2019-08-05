@@ -1,10 +1,9 @@
 
 import requests
 from flask import Blueprint, current_app, request, Response, session
-from flask_jwt import jwt_required, current_identity
 
 
-def _proxy(new_url):
+def _proxy(new_url, token=None):
     new_url = request.url.replace(request.host_url, new_url + "/")
     print("Proxying", request.url, "to", new_url)
     resp = requests.request(
@@ -20,6 +19,8 @@ def _proxy(new_url):
                         'content-length', 'transfer-encoding', 'connection']
     headers = [(name, value) for (name, value) in resp.raw.headers.items()
                if name.lower() not in excluded_headers]
+    if token and not filter(lambda h: h[0] == 'Authorization', headers):
+        headers += [("Authorization", "JWT " + token)]
 
     response = Response(resp.content, resp.status_code, headers)
     return response
@@ -39,28 +40,42 @@ static_bp = Blueprint("static_routes", __name__, url_prefix="/")
 @static_bp.route('/admin/<path:path>')
 def frontend(path=None):
     print("current session: ", session)
-    session["abcd"] = 1234
     return _proxy(current_app.config.get('TOPKEK_FRONTEND_URL'))
 
 
-api_bp = Blueprint("api_routes", __name__, url_prefix="/api")
+api_bp = Blueprint("api_routes", __name__, url_prefix="/")
 
 
-@api_bp.route('/login/<path:path>')
+@api_bp.route('/api/login/auth', methods=('POST',))
+def api_login_auth():
+    response = _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
+    print(response)
+    print(response.get_json())
+    if response.status_code == 200:
+        print("yee yee")
+        session['access_token'] = response.get_json()['access_token']
+    return response
+
+
+@api_bp.route('/api/login/<path:path>', methods=('GET', 'POST'))
 def api_login(path):
     return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
 
 
-@api_bp.route('/app/<path:path>')
-@jwt_required()
+@api_bp.route('/api/app/<path:path>', methods=('GET', 'POST'))
 def api_app(path):
-    return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
+    if 'access_token' in session:
+        return _proxy(current_app.config.get('TOPKEK_SERVER_URL'), session['access_token'])
+    else:
+        return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
 
 
-@api_bp.route('/admin/<path:path>')
-@jwt_required()
+@api_bp.route('/api/admin/<path:path>', methods=('GET', 'POST'))
 def api_admin(path):
-    return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
+    if 'access_token' in session:
+        return _proxy(current_app.config.get('TOPKEK_SERVER_URL'), session['access_token'])
+    else:
+        return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
 
 
 def init_app(app):
