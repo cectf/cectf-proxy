@@ -29,15 +29,8 @@ def _proxy(new_url, token=None):
 static_bp = Blueprint("static_routes", __name__, url_prefix="/")
 
 
-@static_bp.route('/login')
-@static_bp.route('/login/')
-@static_bp.route('/login/<path:path>')
-@static_bp.route('/app')
-@static_bp.route('/app/')
-@static_bp.route('/app/<path:path>')
-@static_bp.route('/admin')
-@static_bp.route('/admin/')
-@static_bp.route('/admin/<path:path>')
+@static_bp.route('/')
+@static_bp.route('/<path:path>')
 def frontend(path=None):
     print("current session: ", session)
     return _proxy(current_app.config.get('TOPKEK_FRONTEND_URL'))
@@ -53,7 +46,7 @@ def api_login_auth():
     print(response.get_json())
     if response.status_code == 200:
         print("yee yee")
-        session['access_token'] = response.get_json()['access_token']
+        #session['access_token'] = response.get_json()['access_token']
     return response
 
 
