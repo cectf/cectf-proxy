@@ -39,36 +39,9 @@ def frontend(path=None):
 api_bp = Blueprint("api_routes", __name__, url_prefix="/")
 
 
-@api_bp.route('/api/login/auth', methods=('POST',))
-def api_login_auth():
-    response = _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
-    print(response)
-    print(response.get_json())
-    if response.status_code == 200:
-        print("yee yee")
-        #session['access_token'] = response.get_json()['access_token']
-    return response
-
-
-@api_bp.route('/api/login/<path:path>', methods=('GET', 'POST'))
-def api_login(path):
+@api_bp.route('/api/<path:path>', methods=('GET', 'POST'))
+def api(path):
     return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
-
-
-@api_bp.route('/api/app/<path:path>', methods=('GET', 'POST'))
-def api_app(path):
-    if 'access_token' in session:
-        return _proxy(current_app.config.get('TOPKEK_SERVER_URL'), session['access_token'])
-    else:
-        return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
-
-
-@api_bp.route('/api/admin/<path:path>', methods=('GET', 'POST'))
-def api_admin(path):
-    if 'access_token' in session:
-        return _proxy(current_app.config.get('TOPKEK_SERVER_URL'), session['access_token'])
-    else:
-        return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
 
 
 def init_app(app):
