@@ -2,21 +2,11 @@
 
 You need Python 3 and pip installed to set up this project.
 
-Navigate to the project repository and do this to set up the python virtual environment and enable it:
+Navigate to the project repository and run `./setup_workspace.sh`. This will set up the virtual environment, install the required python dependencies, and set up a default `instance/config.py` that points to the default `topkek-frontend` and `topkek-server` instances running on localhost.
 
-```
-python3 -m venv venv
-source venv/bin/activate
-```
+Run `sudo run.sh` to launch the Flask server. It is configured to run the server on `http://127.0.0.1:80` (AKA `http://127.0.0.1`) by default, and so requires sudo access.
 
-Run `run.sh` to launch the Flask server. It is configured to run the server on `http://127.0.0.1:80` (AKA `http://127.0.0.1`) by default.
-
-Configuration can be done by adding variables to `instance/config.py`. To serve the default configuration of `topkek-frontend` and `topkek-server`, put this inside `instance/config.py`:
-
-```
-TOPKEK_FRONTEND_URL = "http://127.0.0.1:5000"
-TOPKEK_SERVER_URL = "http://127.0.0.1:5001"
-```
+Configuration can be done by adding variables to `instance/config.py`.
 
 TODO add some tests
 
