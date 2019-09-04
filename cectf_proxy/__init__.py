@@ -2,6 +2,8 @@ import os
 import requests
 
 from flask import Flask
+from . import celery
+from . import stats
 
 
 def create_app(test_config=None):

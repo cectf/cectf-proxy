@@ -1,13 +1,13 @@
 
 import requests
 from flask import Blueprint, current_app, request, Response, session
-import cectf_stats_worker.proxy as worker
+from . import stats
 
 
-def _proxy(new_url, token=None):
+def _proxy(new_url):
     new_url = request.url.replace(request.host_url, new_url + "/")
     print("Proxying", request.url, "to", new_url)
-    worker.request(request)
+    stats.handle_request(hash(request), request)
     resp = requests.request(
         method=request.method,
         url=new_url,
@@ -21,10 +21,8 @@ def _proxy(new_url, token=None):
                         'content-length', 'transfer-encoding', 'connection']
     headers = [(name, value) for (name, value) in resp.raw.headers.items()
                if name.lower() not in excluded_headers]
-    if token and not filter(lambda h: h[0] == 'Authorization', headers):
-        headers += [("Authorization", "JWT " + token)]
 
-    worker.response(resp)
+    stats.handle_response(hash(request), resp)
     response = Response(resp.content, resp.status_code, headers)
     return response
 

@@ -17,6 +17,8 @@ setup(
     install_requires=[
         'Flask',
         'requests',
-        'cectf-stats-worker'
+        'celery',
+        'redis',
+        'mongoengine'
     ],
 )
