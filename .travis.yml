@@ -1,0 +1,14 @@
+language: python
+python:
+- '3.6'
+install:
+- pip install .
+deploy:
+  provider: pypi
+  user: dchiquit
+  password:
+    secure: Iym1Ay3YfVYNJbXwJub92G8znwQOQ7oyaBgKl/gcuOlv6agbHrL16Atd41bJzWdWkuDAUYhbDkX04rcETUzC/aB4PTHBUUylK/C5Vq7pdOaWvPds3vYLTOaOutXbwknrw9TyP7hPdNEBpaKSJI1z7RcJXNAtTCor2kM9sDwVMYd9duSyfoeJ3WOLmHU4Um4TY8w11EX6Eck3xUyc7IEjD95KBC2Vw5B4FJFocbudxUVO5yhbYduJigldHl8zz6qwuC40iVUe8k2pNcxESrdzkaXHyTII+w4usHCfKrZNFLguoyH7/DtqBAuHEbynaNE658xZ3IsN8M6ue/O1ZMTX+EXgW5ooWXLcyXTYSXsBBa3yt/lEX7agZytBMylZ/IDoJmL9g2C3rbEugdI/bxjztCeEhiHt6rsx6+GcXPrUQs5A13y7K70mCqlRR805LRav1ECTl38NLTJdqC5wF8kz3f+tCwj5xuifxwIZFLS6q1XJLdrCSPKZlmmeL5XogTu+izJz/0GgnR+2F/NDlSxZkDU4E1kGurXfCiif/Er5Q4u1qJ4WbQcb7sJz7xVz6zRqKF2YTTJpE3vq6mwqILTkL/Ca8IFR7ONt8dbzLtxy1UQMQyl9jnZEc6w+BuMq7Kmu7VE49RhJAn4/06IjnJo/EKDSpzo9bkiyU0CDXqqQA44=
+  on:
+    branch: master
+    tags: true
+  skip_cleanup: true
