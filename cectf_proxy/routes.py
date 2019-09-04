@@ -33,7 +33,7 @@ static_bp = Blueprint("static_routes", __name__, url_prefix="/")
 @static_bp.route('/<path:path>')
 def frontend(path=None):
     print("current session: ", session)
-    return _proxy(current_app.config.get('TOPKEK_FRONTEND_URL'))
+    return _proxy(current_app.config.get('CECTF_FRONTEND_URL'))
 
 
 api_bp = Blueprint("api_routes", __name__, url_prefix="/")
@@ -41,7 +41,7 @@ api_bp = Blueprint("api_routes", __name__, url_prefix="/")
 
 @api_bp.route('/api/<path:path>', methods=('GET', 'POST'))
 def api(path):
-    return _proxy(current_app.config.get('TOPKEK_SERVER_URL'))
+    return _proxy(current_app.config.get('CECTF_SERVER_URL'))
 
 
 def init_app(app):

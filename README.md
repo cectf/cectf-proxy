@@ -1,8 +1,8 @@
-# topkek-proxy
+# cectf-proxy
 
 You need Python 3 and pip installed to set up this project.
 
-Navigate to the project repository and run `./setup_workspace.sh`. This will set up the virtual environment, install the required python dependencies, and set up a default `instance/config.py` that points to the default `topkek-frontend` and `topkek-server` instances running on localhost.
+Navigate to the project repository and run `./setup_workspace.sh`. This will set up the virtual environment, install the required python dependencies, and set up a default `instance/config.py` that points to the default `cectf-frontend` and `cectf-server` instances running on localhost.
 
 Run `sudo run.sh` to launch the Flask server. It is configured to run the server on `http://127.0.0.1:80` (AKA `http://127.0.0.1`) by default, and so requires sudo access.
 
