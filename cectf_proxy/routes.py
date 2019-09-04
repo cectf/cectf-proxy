@@ -1,15 +1,13 @@
 
 import requests
 from flask import Blueprint, current_app, request, Response, session
-from cectf_stats_worker import logitin, logitout
+import cectf_stats_worker.proxy as worker
 
 
 def _proxy(new_url, token=None):
     new_url = request.url.replace(request.host_url, new_url + "/")
     print("Proxying", request.url, "to", new_url)
-    logitin.delay(request.method, request.url,
-                  [k for k in request.headers.items()],
-                  request.cookies)
+    worker.request(request)
     resp = requests.request(
         method=request.method,
         url=new_url,
@@ -26,7 +24,7 @@ def _proxy(new_url, token=None):
     if token and not filter(lambda h: h[0] == 'Authorization', headers):
         headers += [("Authorization", "JWT " + token)]
 
-    logitout.delay(resp.status_code)
+    worker.response(resp)
     response = Response(resp.content, resp.status_code, headers)
     return response
 
