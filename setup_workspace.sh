@@ -4,6 +4,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 pip install -e .
+pip install -r test_requirements.txt
 
 mkdir instance
 echo "CECTF_FRONTEND_URL = 'http://127.0.0.1:5000'" >> instance/config.py
