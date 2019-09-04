@@ -1,6 +1,10 @@
 #!/bin/sh
 
 python3 -m venv venv
+
+echo "Adding best guess for cectf-stats-worker repository to PYTHONPATH"
+echo "export PYTHONPATH=\"$(dirname `pwd`)/cectf-stats-worker\"" >> venv/bin/activate
+
 source venv/bin/activate
 
 pip install -e .
