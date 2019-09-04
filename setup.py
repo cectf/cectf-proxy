@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='cectf-proxy',
-    version='1.0.1',
+    version='1.0.2',
     author="Daniel Chiquito",
     author_email="daniel.chiquito@gmail.com",
     description='Backend for the CECTF',
