@@ -6,8 +6,8 @@ from . import stats
 
 def _proxy(new_url):
     new_url = request.url.replace(request.host_url, new_url + "/")
-    print("Proxying", request.url, "to", new_url)
-    stats.handle_request(hash(request), request)
+    print("Proxying", request.method, request.url, "to", new_url)
+    #stats.handle_request(hash(request), request)
     resp = requests.request(
         method=request.method,
         url=new_url,
@@ -22,7 +22,7 @@ def _proxy(new_url):
     headers = [(name, value) for (name, value) in resp.raw.headers.items()
                if name.lower() not in excluded_headers]
 
-    stats.handle_response(hash(request), resp)
+    #stats.handle_response(hash(request), resp)
     response = Response(resp.content, resp.status_code, headers)
     return response
 
@@ -40,7 +40,7 @@ def frontend(path=None):
 api_bp = Blueprint("api_routes", __name__, url_prefix="/")
 
 
-@api_bp.route('/api/<path:path>', methods=('GET', 'POST'))
+@api_bp.route('/api/<path:path>', methods=('GET', 'POST', 'DELETE'))
 def api(path):
     return _proxy(current_app.config.get('CECTF_SERVER_URL'))
 
